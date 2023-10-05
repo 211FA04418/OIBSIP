@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" id="username" required>
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="password" required>
+
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div class="container" style="background-color: #f2f2f2">
+        <h2>Register</h2>
+        <label for="newUsername"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" id="newUsername" required>
+
+        <label for="newPassword"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="newPassword" required>
+
+        <button onclick="register()">Register</button>
+    </div>
+
+    <div id="message"></div>
+
+    <script>
+        const users = [];
+
+        function register() {
+            const newUsername = document.getElementById("newUsername").value;
+            const newPassword = document.getElementById("newPassword").value;
+
+            if (!newUsername || !newPassword) {
+                showMessage("Please fill in all fields.");
+                return;
+            }
+
+            if (users.some(user => user.username === newUsername)) {
+                showMessage("Username already exists. Please choose a different one.");
+                return;
+            }
+
+            users.push({ username: newUsername, password: newPassword });
+            showMessage("Registration successful. You can now log in.");
+        }
+
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                showMessage("Login successful. Welcome, " + username + "!");
+            } else {
+                showMessage("Login failed. Please check your username and password.");
+            }
+        }
+
+        function showMessage(message) {
+            const messageDiv = document.getElementById("message");
+            messageDiv.textContent = message;
+        }
+    </script>
+</body>
+</html>
